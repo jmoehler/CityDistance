@@ -1,4 +1,4 @@
-from math import *
+from math import cos, pi, sqrt
 
 class City:
     def __init__(self, name, lat, lon):
@@ -22,8 +22,6 @@ def distanceBase(dilat, dilon):
     return sqrt(dilon**2 + dilat**2)
 
 def distance(city1, city2): 
-    c1 = city1
-    c2 = city2
     dilat = diffGamma(city1.lat, city2.lat)
     dilon = diffGamma(city1.lon, city2.lon)
     return distanceBase(dilat, dilon)
