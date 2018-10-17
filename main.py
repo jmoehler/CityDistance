@@ -1,12 +1,13 @@
 from math import cos, pi, sqrt
 
 class City:
-    def __init__(self, name, lat, lon):
+    def __init__(self, name, lat, lon, temp):
         self.name = name
         self.lat = lat
         self.lon = lon
+        self.temp = temp
     def describe(self):
-        print("die Koordinaten von %s sind %f Lat und %f Lon." %(self.name, self.lat, self.lon))
+        print("Die Koordinaten von %s sind %f Lat und %f Lon. Die Temperatur beträgt %.1f Grad Celcius." %(self.name, self.lat, self.lon, self.temp))
 
 def diffGamma(alpha, beta):  
     # differenz von winkel alpha zu Winkel beta
@@ -26,12 +27,18 @@ def distance(city1, city2):
     dilon = diffGamma(city1.lon, city2.lon)
     return distanceBase(dilat, dilon)
 
-def main():
-    stg = City("Stuttgart", 48.7758459, 9.1829321)
-    ber = City("Berlin", 52.521918, 13.413215)
-    ham = City("Hamburg", 53.551085, 9.993682)
+def tempDiff(city1, city2):
+    return abs(city1.temp - city2.temp)
 
-    cities = [stg, ber, ham]
+
+def main():
+    stg = City("Stuttgart", 48.7758459, 9.1829321, 22)
+    ber = City("Berlin", 52.521918, 13.413215, 21)
+    ham = City("Hamburg", 53.551085, 9.993682, 24)
+    nür = City("Nürnberg", 49.452030, 11.076750, 22)
+    fra = City("Frankfurt", 50.110922, 8.682127, 23)
+
+    cities = [stg, ber, ham, nür, fra]
 
     for c in cities:
         c.describe()
@@ -41,8 +48,9 @@ def main():
             c1 = cities[i]
             c2 = cities[j]
             dist = distance(c1, c2)
+            tDiff = tempDiff(c1, c2)
             if dist == 0:
                 continue
-            print("Die Luftlinie von %s nach %s beträgt %.2f Kilometer." % (c1.name, c2.name, dist))
+            print("Die Luftlinie von %s nach %s beträgt %.2f Kilometer. Der Temperaturunterschied beträgt %.1f Grad Celcius" % (c1.name, c2.name, dist, tDiff))
 
 main()
