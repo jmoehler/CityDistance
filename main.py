@@ -1,56 +1,47 @@
-from math import cos, pi, sqrt
+from distanceCalc import City, distance
 
-class City:
-    def __init__(self, name, lat, lon, temp):
+
+stg = City("Stuttgart", 48.7758459, 9.1829321, 22)
+ber = City("Berlin", 52.521918, 13.413215, 21)
+ham = City("Hamburg", 53.551085, 9.993682, 24)
+nür = City("Nürnberg", 49.452030, 11.076750, 22)
+fra = City("Frankfurt", 50.110922, 8.682127, 23)
+
+
+
+class Meneken:
+    def __init__(self, toDo, start, ziel, name):
+        self.done = []
+        self.toDo = toDo
+        self.distanceDone = 0
+        self.start = start 
+        self.ziel = ziel 
+        self.standort = start
         self.name = name
-        self.lat = lat
-        self.lon = lon
-        self.temp = temp
-    def describe(self):
-        print("Die Koordinaten von %s sind %f Lat und %f Lon. Die Temperatur beträgt %.1f Grad Celcius." %(self.name, self.lat, self.lon, self.temp))
+        self.sleeps = 0
+    def info(self):
+        print("Hallo wir bims %s und bims grad in %s und reisen von %s nach %s. Wir bims schon %.1f viel km gerannt und habms %d mal übernachtet" 
+            %(self.name, self.standort.name, self.start.name, self.ziel.name, self.distanceDone, self.sleeps))
 
-def diffGamma(alpha, beta):  
-    # differenz von winkel alpha zu Winkel beta
-    dGamma = alpha - beta 
-    dGammaRad = pi / 180 * dGamma
-    # Erdradius in km
-    r = 6378
-    # länge auf lat berechnen               
-    return r*sqrt(2*(1-cos(dGammaRad)))        
-    
-def distanceBase(dilat, dilon):
-    # insgesammte länge berechnen
-    return sqrt(dilon**2 + dilat**2)
+    def move(self):
+        if len(self.toDo) > 0:
+            nextZiel = self.toDo.pop(0)
+        else: 
+            nextZiel = self.ziel
+        distanze = distance(nextZiel,self.standort)
+        self.distanceDone += distanze
+        self.done.append(nextZiel)
+        self.standort = nextZiel
+        self.sleeps = len(self.done)
 
-def distance(city1, city2): 
-    dilat = diffGamma(city1.lat, city2.lat)
-    dilon = diffGamma(city1.lon, city2.lon)
-    return distanceBase(dilat, dilon)
-
-def tempDiff(city1, city2):
-    return abs(city1.temp - city2.temp)
+    def istAmZiel(self):
+        return self.ziel in self.done
 
 
-def main():
-    stg = City("Stuttgart", 48.7758459, 9.1829321, 22)
-    ber = City("Berlin", 52.521918, 13.413215, 21)
-    ham = City("Hamburg", 53.551085, 9.993682, 24)
-    nür = City("Nürnberg", 49.452030, 11.076750, 22)
-    fra = City("Frankfurt", 50.110922, 8.682127, 23)
 
-    cities = [stg, ber, ham, nür, fra]
 
-    for c in cities:
-        c.describe()
 
-    for i in range(0,len(cities)):
-        for j in range(i +1, len(cities)):
-            c1 = cities[i]
-            c2 = cities[j]
-            dist = distance(c1, c2)
-            tDiff = tempDiff(c1, c2)
-            if dist == 0:
-                continue
-            print("Die Luftlinie von %s nach %s beträgt %.2f Kilometer. Der Temperaturunterschied beträgt %.1f Grad Celcius" % (c1.name, c2.name, dist, tDiff))
-
-main()
+jakiPapa = Meneken([fra, ham, nür], stg, ber, "jaki und Papaa")
+while not(jakiPapa.istAmZiel()):
+    jakiPapa.move()
+    jakiPapa.info()
