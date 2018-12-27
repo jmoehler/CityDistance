@@ -1,19 +1,4 @@
-from math import cos, acos, pi, sqrt, sin
-
-class City:
-    def __init__(self, name, lat, lon, temp):
-        self.name = name
-        self.lat = lat
-        self.lon = lon
-        self.temp = temp
-    def describe(self):
-        print("Die Koordinaten von %s sind %f Lat und %f Lon. Die Temperatur beträgt %.1f Grad Celcius." %(self.name, self.lat, self.lon, self.temp))
-    def info(self):
-        print("Die Koordinaten von %s sind %.1f Lat und %.1f Lon." %(self.name, self.lat, self.lon))
-    def __str__(self):
-        return "Die Koordinaten von %s sind %.1f Lat und %.1f Lon." %(self.name, self.lat, self.lon)
-    def __repr__(self):
-        return self.__str__()
+from math import cos, pi, sqrt
 
 def diffGamma(alpha, beta):  
     # differenz von winkel alpha zu Winkel beta
@@ -57,4 +42,7 @@ def distStart():
             tDiff = tempDiff(c1, c2)
             if dist == 0:
                 continue
-            print("Die Luftlinie von %s nach %s beträgt %.2f Kilometer. Der Temperaturunterschied beträgt %.1f Grad Celcius" % (c1.name, c2.name, dist, tDiff))
+            print("De Luftlinie %s, %s ist %.2fKm TempDiff:%.1fC" % (c1.name, c2.name, dist, tDiff))
+
+
+
