@@ -14,8 +14,9 @@ hdh = City("Hdh", 48.6893963, 10.1610948, 2)    #Heidenheim
 drs = City("Drs", 51.0504088, 13.7372621, 4)    #Dresden
 prs = City("Prs", 48.856614,  2.3522219,  3)    #Paris
 
-alleCities = [stg, ber, ham, nür, fra, düs, hbn, hdh, drs, prs]
 alleTodo = [ham, nür, fra, düs, hbn, hdh, drs, prs]
+
+numPath = 1916
 
 start = time()
 
@@ -26,9 +27,6 @@ allePfade = []
 p = Path(alleTodo, stg, ber)
 allePfade.append(p)
 
-#gibt alle Pfade aus
-#print(allePfade) 
-
 neuePfade = []
 
 #hohlt bei einem Pfad eine City aus todo raus
@@ -38,34 +36,21 @@ for q in range(0,len(alleTodo)):
             newP = deepcopy(p)
             cityNeu = newP.todo.pop(i)
             newP.visited.append(cityNeu)
-            #newP ist neuer Pfad am anfang identisch mit p
-            #print("New path: %s" %(newP))
             #newP zu neuePfade
             neuePfade.append(newP)
-    #print(neuePfade)
-    #länge alle Pfade (ohne neuePfade)
-    #print(len(allePfade))
-    allePfade = neuePfade
+    neuePfade.sort()
+    
+    allePfade = neuePfade[:numPath]
     neuePfade = []
-    #länge alle Pfade (mit neuePfade)
-    #print(len(allePfade))
-
 #länge der Pfade
+done = time()
 
+allePfade.sort()
 smalestDist = allePfade[0].currDist()
 shortestIndex = 0
-for i in range(1,len(allePfade)):
-    lengh = allePfade[i].currDist()
-    #print(lengh)
-    if lengh < smalestDist:
-        smalestDist = lengh
-        shortestIndex = i
 
-done = time()
 
 print(len(allePfade))
 print("%.2fkm" %(smalestDist))
 print(allePfade[shortestIndex])
 print("%.2fs Laufzeit" %(done - start))
-
-
