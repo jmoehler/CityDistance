@@ -1,71 +1,71 @@
-from distance import distance
-from City     import City
-
+from City import City
+from copy import deepcopy
+from Path import Path
+from time import time
 
 stg = City("Stg", 48.7758459, 9.1829321, 22)    #Stuttgart
 ber = City("Ber", 52.521918,  13.413215, 21)    #Berlin
 ham = City("Ham", 53.551085,  9.993682,  24)    #Hamburg
 nür = City("Nür", 49.452030,  11.076750, 22)    #Nürnberg
 fra = City("Fra", 50.110922,  8.682127,  23)    #Frankfurt
+düs = City("Düs", 51.2277411, 6.7734556,  9)    #Düsseldorf
+hbn = City("Hdn", 49.1426929, 9.210879,  10)    #Heilbronn
+hdh = City("Hdh", 48.6893963, 10.1610948, 2)    #Heidenheim
+drs = City("Drs", 51.0504088, 13.7372621, 4)    #Dresden
+prs = City("Prs", 48.856614,  2.3522219,  3)    #Paris
 
-alleCities = [stg, ber, ham, nür, fra]
+alleCities = [stg, ber, ham, nür, fra, düs, hbn, hdh, drs, prs]
+alleTodo = [ham, nür, fra, düs, hbn, hdh, drs, prs]
 
-for i in range(0,len(alleCities)):
-     for j in range(0, len(alleCities)):
-        c1 = alleCities[i]
-        c2 = alleCities[j]
-        dist = distance(c1, c2)
-        if dist != 0:
-            print("Der A. von %s zu %s beträgt %.1fkm" %(c1.name,c2.name,dist) )
+start = time()
 
-class Meneken:
-    def __init__(self, toDo, start, ziel, name):
-        self.done = []
-        self.toDo = toDo
-        self.distanceDone = 0
-        self.start = start 
-        self.ziel = ziel 
-        self.standort = start
-        self.name = name
-        self.sleeps = 0
-    def info(self):
-        print("Hallo wir bims %s und bims grad in %s und reisen von %s nach %s. Wir bims schon %.1f viel km gerannt und hams %d mal übernachtet" 
-            %(self.name, self.standort.name, self.start.name, self.ziel.name, self.distanceDone, self.sleeps))
+#numPfad = 3*len(alleTodo) 
+allePfade = []
 
-    def move(self):
-        if len(self.toDo) > 0:
-            nextIndex = closestCity(self.standort, self.toDo)
-            nextZiel = self.toDo.pop(nextIndex)
-        else: 
-            nextZiel = self.ziel
-        distanze = distance(nextZiel,self.standort)
-        self.distanceDone += distanze
-        self.done.append(nextZiel)
-        self.standort = nextZiel
-        self.sleeps = len(self.done)
+#generiere Pfad der in Stg anfangen
+p = Path(alleTodo, stg, ber)
+allePfade.append(p)
 
-    def istAmZiel(self):
-        return self.ziel in self.done
-    
+#gibt alle Pfade aus
+#print(allePfade) 
 
+neuePfade = []
 
-def closestCity(standort, ziele):
-    shortest = ziele[0]
-    shortestIdx = 0
-    for t in range(1, len(ziele)):
-        ziel1 = shortest
-        ziel2 = ziele[t]
-        if distance(standort, ziel1) > distance(standort, ziel2):
-            shortest = ziel2
-            shortestIdx = t
+#hohlt bei einem Pfad eine City aus todo raus
+for q in range(0,len(alleTodo)):
+    for p in allePfade:
+        for i in range(0,len(p.todo)):
+            newP = deepcopy(p)
+            cityNeu = newP.todo.pop(i)
+            newP.visited.append(cityNeu)
+            #newP ist neuer Pfad am anfang identisch mit p
+            #print("New path: %s" %(newP))
+            #newP zu neuePfade
+            neuePfade.append(newP)
+    #print(neuePfade)
+    #länge alle Pfade (ohne neuePfade)
+    #print(len(allePfade))
+    allePfade = neuePfade
+    neuePfade = []
+    #länge alle Pfade (mit neuePfade)
+    #print(len(allePfade))
 
-    return shortestIdx
+#länge der Pfade
 
+smalestDist = allePfade[0].currDist()
+shortestIndex = 0
+for i in range(1,len(allePfade)):
+    lengh = allePfade[i].currDist()
+    #print(lengh)
+    if lengh < smalestDist:
+        smalestDist = lengh
+        shortestIndex = i
 
-jakiPapa = Meneken([fra, ham, nür], stg, ber, "jaki und Papaa")
-while not(jakiPapa.istAmZiel()):
-    jakiPapa.move()
-    jakiPapa.info()
+done = time()
 
+print(len(allePfade))
+print("%.2fkm" %(smalestDist))
+print(allePfade[shortestIndex])
+print("%.2fs Laufzeit" %(done - start))
 
 

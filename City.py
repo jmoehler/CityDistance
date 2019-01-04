@@ -1,4 +1,5 @@
-#
+#das is ne schöne Stadt
+
 class City:
 
     def __init__(self, name, lat, lon, temp):
@@ -14,8 +15,14 @@ class City:
         print("%s:  %.1f Lat,  %.1f Lon" %(self.name, self.lat, self.lon))
    
     def __str__(self):
-        return "%s (%.1f, %.1f)" %(self.name, self.lat, self.lon)
+        #return "%s (%.1f, %.1f)" %(self.name, self.lat, self.lon)
+        return "%s" %(self.name)
    
     def __repr__(self):
         return self.__str__()
+
+
+
+
+
     
