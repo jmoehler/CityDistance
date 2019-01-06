@@ -18,7 +18,7 @@ ny  = City("Ny" , 40.712784,  -74.005941, 8)    #New York
 
 alleTodo = [ham, nür, fra, düs, hn, hdh, drs, prs, ny]
 
-liste = [100000,200000, 350000]
+liste = [1,5,10.50,100,500,1000,5000,10000]
 
 for p in liste:
 
