@@ -1,5 +1,5 @@
 from distance import distance, tempDiff
-# how to use the distance calculations:
+
 def distExample():
     from City import City
     stg = City("Stg", 48.7758459, 9.1829321, 22)    #Stuttgart

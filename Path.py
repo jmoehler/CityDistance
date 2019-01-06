@@ -18,11 +18,7 @@ class Path:
 
     def __lt__(self,other):
         return self.currDist() < other.currDist()
-            
-        #berechnen aus den visited 
-        #ausprobieren mit mehr als 1 stadt in visited
-    #def info(self):
-        #print ("visited: %s todo: %s" %(self.visited, self.todo))
+        
         #konvertierung um stings mit print auszugeben
     def __str__(self):
         return "<visited: %s todo: %s End:%s, dist %.0f >" %(self.visited, self.todo, self.endCity, self.currDist())

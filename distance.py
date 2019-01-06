@@ -1,22 +1,11 @@
-from math import cos, pi, sqrt
+import pyproj
 
-def diffGamma(alpha, beta):  
-    # differenz von winkel alpha zu Winkel beta
-    dGamma = alpha - beta 
-    dGammaRad = pi / 180 * dGamma
-    # Erdradius in km
-    r = 6378
-    # länge auf lat berechnen               
-    return r*sqrt(2*(1-cos(dGammaRad)))        
-    
-def distanceBase(dilat, dilon):
-    # insgesammte länge berechnen
-    return sqrt(dilon**2 + dilat**2)
 
-def distance(city1, city2):
-    dilat = diffGamma(city1.lat, city2.lat)
-    dilon = diffGamma(city1.lon, city2.lon)
-    return distanceBase(dilat, dilon)
+def distance(city1,city2):
+    geod = pyproj.Geod(ellps='WGS84')
+    angle1,angle2,distance = geod.inv(city1.lon, city1.lat, city2.lon, city2.lat)
+    return distance/1000.0
 
 def tempDiff(city1, city2):
     return abs(city1.temp - city2.temp)
+    
