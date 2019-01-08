@@ -5,7 +5,11 @@ class Path:
         self.visited = [startCity]  
         self.todo = todo 
         self.endCity = endCity
+        self.lastDist = 0
+        self.lastDistVisited = []
     def currDist(self):
+        if len(self.visited) == self.lastDistVisited:
+            return self.lastDist
         dist = 0
         for i in range(1,len(self.visited)):
             CityPrev = self.visited[i-1]
@@ -13,6 +17,8 @@ class Path:
             dist1 = distance(CityPrev,CityI)
             dist += dist1 
         dist += distance(self.visited[-1],self.endCity)
+        self.lastDist = dist
+        self.lastDistVisited = len(self.visited)
         return dist
 
     def __lt__(self,other):
