@@ -10,7 +10,7 @@ fra = City("Fra", 50.110922,  8.682127,  23)    #Frankfurt
 düs = City("Düs", 51.2277411, 6.7734556, 20)    #Düsseldorf
 köl = City("Köl", 50.941278,  6.958281,  10)    #Köln
 
-alleCities = [stg, ber, ham, nür, fra, düs,köl]
+alleCities = [stg, ber, ham, nür, fra, düs,köl]  
 
 for i in range(0,len(alleCities)):
      for j in range(0, len(alleCities)):

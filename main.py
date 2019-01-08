@@ -1,8 +1,9 @@
-from copy import deepcopy
-from time import time
+from copy         import deepcopy
+from time         import time
 
-from Path import Path
-from City import City
+from Path         import Path
+from City         import City
+from distanceDict import calcOnce ,distDict
 
 stg = City("Stg", 48.7758459, 9.1829321, 22)    #Stuttgart
 ber = City("Ber", 52.521918,  13.413215, 21)    #Berlin
@@ -18,7 +19,11 @@ ny  = City("Ny" , 40.712784,  -74.005941, 8)    #New York
 
 alleTodo = [ham, nür, fra, düs, hn, hdh, drs, prs, ny]
 
-liste = [1,5,10.50,100,500,1000,5000,10000]
+alleCities = [stg, ber, ham, nür, fra, düs, hn, hdh, drs, prs, ny] 
+
+calcOnce(len(alleCities),alleCities)
+
+liste = [1,5,10,50,100,500,1000,2000,5000,10000,20000,50000,100000,200000,350000]
 
 for p in liste:
 

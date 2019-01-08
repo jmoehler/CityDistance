@@ -1,5 +1,4 @@
-from distance import distance
-
+from distanceDict     import distance1
 
 class Path:
     def __init__(self, todo, startCity,endCity ):
@@ -11,9 +10,9 @@ class Path:
         for i in range(1,len(self.visited)):
             CityPrev = self.visited[i-1]
             CityI = self.visited[i]
-            dist1 = distance(CityPrev,CityI)
+            dist1 = distance1(CityPrev,CityI)
             dist += dist1 
-        dist += distance(self.visited[-1],self.endCity)
+        dist += distance1(self.visited[-1],self.endCity)
         return dist
 
     def __lt__(self,other):

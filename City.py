@@ -5,7 +5,7 @@ class City:
     def __init__(self, name, lat, lon, temp):
         self.name = name
         self.lat = lat
-        self.lon = lon
+        self.lon = lon 
         self.temp = temp
 
     def describe(self):
